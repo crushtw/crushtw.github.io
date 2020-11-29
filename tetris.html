@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../WYZXW/CSS基础/reset.css">
+    <link rel="stylesheet" href="../../WYZXW/CSS基础/reset.css">
     <title>pro</title>
     <style>
         * {
@@ -354,7 +354,7 @@
                 [1, 1, 1, 1]
             ];
             new_block.color = getRandomColor(color);
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem;");
+            new_block.setAttribute("style", "top:-1rem;left:" + random_pos + "rem;");
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
             main_area.prepend(new_block);
@@ -368,7 +368,7 @@
             let random_pos = Math.floor(Math.random() * 14);
             let new_block = document.createElement("div");
             new_block.className = "type type-2";
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem");
+            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
             new_block.id = "type2";
             new_block.isCurrent = true;
             new_block.state = 0;
@@ -390,7 +390,7 @@
             let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-3";
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem");
+            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
             new_block.id = "type3";
             new_block.isCurrent = true;
             new_block.state = 0;
@@ -412,7 +412,7 @@
             let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-4";
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem");
+            new_block.setAttribute("style", "top:-3rem;left:" + random_pos + "rem");
             new_block.id = "type4";
             new_block.isCurrent = true;
             new_block.state = 0;
@@ -435,7 +435,7 @@
             let random_pos = Math.floor(Math.random() * 14);
             let new_block = document.createElement("div");
             new_block.className = "type type-5";
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem");
+            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
             new_block.id = "type5";
             new_block.isCurrent = true;
             new_block.state = 0;
@@ -457,7 +457,7 @@
             let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-6";
-            new_block.setAttribute("style", "top:0rem;left:" + random_pos + "rem");
+            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
             new_block.id = "type6";
             new_block.isCurrent = true;
             new_block.state = 0;
