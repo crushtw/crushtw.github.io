@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../WYZXW/CSS基础/reset.css">
-    <title>pro</title>
+    <title>tetris</title>
     <style>
         * {
             padding: 0;
@@ -28,6 +28,7 @@
             height: 602px;
             border: 1px black solid;
             position: relative;
+            overflow: hidden;
         }
         
         .block {
@@ -536,6 +537,8 @@
                                 for (let pos in item.boundary["bottom"]) {
                                     let row = item.boundary["bottom"][pos][0] + cur_row;
                                     let col = item.boundary["bottom"][pos][1] + cur_col;
+                                    // fix “Z” type and "L" type after transpose two times("7" type) can't move at -2 row
+                                    row = row < -1 ? -1 : row;
                                     if (row != arr.length - 1 && arr[row + 1][col] == 0) {
                                         temporaryArr.push(1); //moving
                                     } else {
@@ -550,6 +553,7 @@
                                         for (let index in item.boundary[direction]) {
                                             let row = item.boundary[direction][index][0] + cur_row;
                                             let col = item.boundary[direction][index][1] + cur_col;
+                                            row = row < 0 ? 0 : row;
                                             arr[row][col] = item.color[0];
                                         }
                                     }
@@ -569,7 +573,7 @@
             eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
 
 
-            //控制block的左右移动
+            //control block moving
             document.onkeydown = function(ev) {
                 let isMove;
                 for (let item of blocks) {
@@ -582,6 +586,8 @@
                                 for (let pos in item.boundary["left"]) {
                                     let row = item.boundary["left"][pos][0] + cur_row;
                                     let col = item.boundary["left"][pos][1] + cur_col;
+                                    // if row<0,can't get arr and error
+                                    row = row < 0 ? 0 : row;
                                     if (col != 0 && arr[row][col - 1] == 0) {
                                         temporaryArr.push(1);
                                     } else {
@@ -598,6 +604,7 @@
                                 for (let pos in item.boundary["right"]) {
                                     let row = item.boundary["right"][pos][0] + cur_row;
                                     let col = item.boundary["right"][pos][1] + cur_col;
+                                    row = row < 0 ? 0 : row;
                                     if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
                                         temporaryArr.push(1);
                                     } else {
@@ -618,6 +625,7 @@
                                     for (let pos in item.boundary["bottom"]) {
                                         let row = item.boundary["bottom"][pos][0] + cur_row;
                                         let col = item.boundary["bottom"][pos][1] + cur_col;
+                                        row = row < -1 ? -1 : row;
                                         if (row != arr.length - 1 && arr[row + 1][col] == 0) {
                                             temporaryArr.push(1); //moving
                                         } else {
@@ -632,6 +640,7 @@
                                             for (let index in item.boundary[direction]) {
                                                 let row = item.boundary[direction][index][0] + cur_row;
                                                 let col = item.boundary[direction][index][1] + cur_col;
+                                                row = row < 0 ? 0 : row;
                                                 arr[row][col] = item.color[0];
                                             }
                                         }
@@ -647,12 +656,14 @@
                                 break;
                             case 38:
                                 let judge_arr = transpose(item.arr);
+                                let judge_boundary = getTypeCondition(judge_arr);
                                 let isFarthest = cur_col + judge_arr[0].length <= 16;
                                 let isHasBlocksArr = [];
-                                for (let direction in item.boundary) {
-                                    for (let block_site in item.boundary[direction]) {
-                                        let row = item.boundary[direction][block_site][0] + cur_row;
-                                        let col = item.boundary[direction][block_site][1] + cur_col;
+                                for (let direction in judge_boundary) {
+                                    for (let block_site in judge_boundary[direction]) {
+                                        let row = judge_boundary[direction][block_site][0] + cur_row;
+                                        let col = judge_boundary[direction][block_site][1] + cur_col;
+                                        row = row < 0 ? 0 : row;
                                         if (arr[row][col] == 0) { //moving
                                             isHasBlocksArr.push(0);
                                         } else { //no moving
