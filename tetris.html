@@ -11,18 +11,18 @@
             padding: 0;
             margin: 0;
         }
-        
+
         html {
             font-size: 25px;
         }
-        
+
         .container {
             width: 700px;
             height: 620px;
             margin: 50px auto;
             display: flex;
         }
-        
+
         .box {
             width: 402px;
             height: 602px;
@@ -30,13 +30,13 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .block {
             width: 1rem;
             height: 1rem;
             border: 1px black solid;
         }
-        
+
         .block-arr {
             width: 1rem;
             height: 1rem;
@@ -44,14 +44,14 @@
             border: 1px black solid;
             position: absolute;
         }
-        
+
         .type-1 {
             display: flex;
             height: 1rem;
             width: 4rem;
             position: absolute;
         }
-        
+
         .type-2 {
             display: flex;
             flex-direction: column;
@@ -59,16 +59,16 @@
             width: 3rem;
             position: absolute;
         }
-        
+
         .type-2-1 {
             margin: 0 auto;
         }
-        
+
         .type-2-2 {
             display: flex;
             height: 1rem;
         }
-        
+
         .type-3 {
             display: flex;
             width: 2rem;
@@ -76,24 +76,24 @@
             flex-flow: wrap;
             position: absolute;
         }
-        
+
         .type-4 {
             display: flex;
             width: 2rem;
             height: 3rem;
             position: absolute;
         }
-        
+
         .type-4-1 {
             display: flex;
             flex-direction: column;
         }
-        
+
         .type-4-2 {
             display: flex;
             flex-direction: column-reverse;
         }
-        
+
         .type-5 {
             display: flex;
             flex-direction: column;
@@ -101,17 +101,17 @@
             height: 2rem;
             position: absolute;
         }
-        
+
         .type-5-1 {
             display: flex;
             flex-direction: row;
         }
-        
+
         .type-5-2 {
             display: flex;
             flex-direction: row-reverse;
         }
-        
+
         .type-6 {
             display: flex;
             flex-direction: column;
@@ -119,12 +119,12 @@
             height: 2rem;
             position: absolute;
         }
-        
+
         .type-6-1 {
             display: flex;
             flex-direction: row;
         }
-        
+
         .start {
             width: 4rem;
             height: 2rem;
@@ -134,11 +134,11 @@
             text-align: center;
             box-shadow: 1px 1px 3px 1px grey;
         }
-        
+
         .start:hover {
             cursor: pointer;
         }
-        
+
         .popUp {
             height: 14rem;
             width: 12rem;
@@ -151,20 +151,20 @@
             align-items: center;
             background: white;
         }
-        
+
         .over {
             font-size: 1.6rem;
             font-weight: 600;
         }
-        
+
         .score {
             font-size: 1.2rem
         }
-        
+
         .highest {
             font-size: 0.8rem
         }
-        
+
         .restart {
             width: 4rem;
             height: 2.5rem;
@@ -173,11 +173,11 @@
             line-height: 2.5rem;
             text-align: center;
         }
-        
+
         .restart:hover {
             cursor: pointer;
         }
-        
+
         .color {
             border: 1px black solid;
             border-radius: 5px;
@@ -187,17 +187,17 @@
             text-align: center;
             line-height: 2rem;
         }
-        
+
         .color:hover {
             cursor: pointer
         }
-        
+
         ul {
             width: 9rem;
             display: flex;
             flex-flow: wrap;
         }
-        
+
         .tool {
             width: 202px;
             height: 602px;
@@ -208,16 +208,20 @@
             justify-content: space-around;
             align-items: center;
         }
-        
+
         .next-pattern-box {
             margin-bottom: 5rem;
         }
-        
+
         .pre-pattern {
             width: 4rem;
             height: 4rem;
             border: black 1px solid;
         }
+
+        /* .type {
+            transition: top 0.5s;
+        } */
     </style>
 </head>
 
@@ -526,55 +530,55 @@
         function clickToStart() {
             start_popUp.style.display = "none";
             clearInterval(moveNewBlock);
-            main_area.addEventListener("DOMNodeInserted", function() {
-                    blocks = document.querySelectorAll(".type");
-                    for (let item of blocks) {
-                        if (item.isCurrent) {
-                            moveNewBlock = setInterval(function() {
-                                let cur_row = parseFloat(item.style.top);
-                                let cur_col = parseFloat(item.style.left);
-                                temporaryArr = [];
-                                for (let pos in item.boundary["bottom"]) {
-                                    let row = item.boundary["bottom"][pos][0] + cur_row;
-                                    let col = item.boundary["bottom"][pos][1] + cur_col;
-                                    // fix “Z” type and "L" type after transpose two times("7" type) can't move at -2 row
-                                    row = row < -1 ? -1 : row;
-                                    if (row != arr.length - 1 && arr[row + 1][col] == 0) {
-                                        temporaryArr.push(1); //moving
-                                    } else {
-                                        temporaryArr.push(0); //stop moving
-                                    }
-                                }
-                                let isMove = temporaryArr.includes(0);
-                                if (isMove) {
-                                    clearInterval(moveNewBlock);
-                                    item.isCurrent = false;
-                                    for (let direction in item.boundary) {
-                                        for (let index in item.boundary[direction]) {
-                                            let row = item.boundary[direction][index][0] + cur_row;
-                                            let col = item.boundary[direction][index][1] + cur_col;
-                                            row = row < 0 ? 0 : row;
-                                            arr[row][col] = item.color[0];
-                                        }
-                                    }
-                                    item.remove();
-                                    refreshBlock();
-                                    fullRemove();
-                                    // console.log(arr);
-                                    isOver();
+            main_area.addEventListener("DOMNodeInserted", function () {
+                blocks = document.querySelectorAll(".type");
+                for (let item of blocks) {
+                    if (item.isCurrent) {
+                        moveNewBlock = setInterval(function () {
+                            let cur_row = parseFloat(item.style.top);
+                            let cur_col = parseFloat(item.style.left);
+                            temporaryArr = [];
+                            for (let pos in item.boundary["bottom"]) {
+                                let row = item.boundary["bottom"][pos][0] + cur_row;
+                                let col = item.boundary["bottom"][pos][1] + cur_col;
+                                // fix “Z” type and "L" type after transpose two times("7" type) can't move at -2 row
+                                row = row < -1 ? -1 : row;
+                                if (row != arr.length - 1 && arr[row + 1][col] == 0) {
+                                    temporaryArr.push(1); //moving
                                 } else {
-                                    item.style.top = parseFloat(item.style.top) + 1 + "rem";
+                                    temporaryArr.push(0); //stop moving
                                 }
-                            }, 300)
-                        }
+                            }
+                            let isMove = temporaryArr.includes(0);
+                            if (isMove) {
+                                clearInterval(moveNewBlock);
+                                item.isCurrent = false;
+                                for (let direction in item.boundary) {
+                                    for (let index in item.boundary[direction]) {
+                                        let row = item.boundary[direction][index][0] + cur_row;
+                                        let col = item.boundary[direction][index][1] + cur_col;
+                                        row = row < 0 ? 0 : row;
+                                        arr[row][col] = item.color[0];
+                                    }
+                                }
+                                item.remove();
+                                refreshBlock();
+                                fullRemove();
+                                // console.log(arr);
+                                isOver();
+                            } else {
+                                item.style.top = parseFloat(item.style.top) + 1 + "rem";
+                            }
+                        }, 300)
                     }
-                })
-                // 添加第一个block，触发listener
+                }
+            })
+            // 添加第一个block，触发listener
             eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
 
 
             //control block moving
-            document.onkeydown = function(ev) {
+            document.onkeydown = function (ev) {
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -618,41 +622,40 @@
                                 break;
                             case 40:
                                 clearInterval(moveNewBlock);
-                                downNewBlock = setInterval(function() {
-                                    let cur_row = parseFloat(item.style.top);
-                                    let cur_col = parseFloat(item.style.left);
-                                    temporaryArr = [];
-                                    for (let pos in item.boundary["bottom"]) {
-                                        let row = item.boundary["bottom"][pos][0] + cur_row;
-                                        let col = item.boundary["bottom"][pos][1] + cur_col;
-                                        row = row < -1 ? -1 : row;
-                                        if (row != arr.length - 1 && arr[row + 1][col] == 0) {
-                                            temporaryArr.push(1); //moving
-                                        } else {
-                                            temporaryArr.push(0);
-                                        }
-                                    }
-                                    let isMove = temporaryArr.includes(0);
-                                    if (isMove) {
-                                        clearInterval(downNewBlock);
-                                        item.isCurrent = false;
-                                        for (let direction in item.boundary) {
-                                            for (let index in item.boundary[direction]) {
-                                                let row = item.boundary[direction][index][0] + cur_row;
-                                                let col = item.boundary[direction][index][1] + cur_col;
-                                                row = row < 0 ? 0 : row;
-                                                arr[row][col] = item.color[0];
+                                let min_distance = 100;
+                                for (let pos in item.boundary["bottom"]) {
+                                    let row = item.boundary["bottom"][pos][0] + cur_row;
+                                    let col = item.boundary["bottom"][pos][1] + cur_col;
+                                    row = row < -1 ? -1 : row;
+                                    for (let i = row + 1; i < arr.length; i++) {
+                                        if (arr[i][col] != 0) {
+                                            if (i - row - 1 < min_distance) {
+                                                min_distance = i - row - 1;
                                             }
+                                            break;
                                         }
-                                        item.remove();
-                                        refreshBlock();
-                                        fullRemove()
-                                            // console.log(arr);
-                                        isOver();
-                                    } else {
-                                        item.style.top = parseFloat(item.style.top) + 1 + "rem";
                                     }
-                                }, 1)
+                                }
+                                if (min_distance == 100) {
+                                    item.style.top = arr.length - item.arr.length + "rem";
+                                } else {
+                                    item.style.top = min_distance + parseFloat(item.style.top) + "rem";
+                                }
+                                cur_row = parseFloat(item.style.top);
+                                cur_col = parseFloat(item.style.left);
+                                for (let direction in item.boundary) {
+                                    for (let index in item.boundary[direction]) {
+                                        let row = item.boundary[direction][index][0] + cur_row;
+                                        let col = item.boundary[direction][index][1] + cur_col;
+                                        row = row < 0 ? 0 : row;
+                                        arr[row][col] = item.color[0];
+                                    }
+                                }
+                                item.remove();
+                                refreshBlock();
+                                fullRemove();
+                                // console.log(arr);
+                                isOver();
                                 break;
                             case 38:
                                 let judge_arr = transpose(item.arr);
