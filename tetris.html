@@ -216,7 +216,9 @@
         .pre-pattern {
             width: 4rem;
             height: 4rem;
-            border: black 1px solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* .type {
@@ -250,7 +252,9 @@
             <p class="score">Score:<span id="cur_score"> 0</span></p>
             <div class="next-pattern-box">
                 <p>next pattern</p>
-                <div class="pre-pattern"></div>
+                <div class="pre-pattern" id="pre_pattern">
+
+                </div>
             </div>
         </div>
     </div>
@@ -262,6 +266,7 @@
         let cur_score = document.getElementById("cur_score");
         let last_score = document.getElementById("last_score");
         let highest_score = document.getElementById("highest_score");
+        let pre_pattern = document.getElementById("pre_pattern");
         let blocks;
         let moveNewBlock;
         let temporaryArr;
@@ -348,33 +353,25 @@
             return [ranNum, all_color[color][ranNum]];
         }
 
+
+
         function newBlock1() {
-            let random_pos = Math.floor(Math.random() * 13);
             let new_block = document.createElement("div");
             new_block.className = "type type-1";
-            new_block.id = "type1";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
                 [1, 1, 1, 1]
             ];
             new_block.color = getRandomColor(color);
-            new_block.setAttribute("style", "top:-1rem;left:" + random_pos + "rem;");
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function newBlock2() {
-            let random_pos = Math.floor(Math.random() * 14);
             let new_block = document.createElement("div");
             new_block.className = "type type-2";
-            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
-            new_block.id = "type2";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
@@ -384,19 +381,12 @@
             new_block.color = getRandomColor(color);
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="block type-2-1"></div><div class="type-2-2"><div class="block"></div><div class="block"></div><div class="block"></div></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function newBlock3() {
-            let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-3";
-            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
-            new_block.id = "type3";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
@@ -406,19 +396,12 @@
             new_block.color = getRandomColor(color);
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function newBlock4() {
-            let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-4";
-            new_block.setAttribute("style", "top:-3rem;left:" + random_pos + "rem");
-            new_block.id = "type4";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
@@ -429,19 +412,12 @@
             new_block.color = getRandomColor(color);
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="type-4-1"><div class="block"></div><div class="block"></div><div class="block"></div></div><div class="type-4-2"><div class="block"></div></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function newBlock5() {
-            let random_pos = Math.floor(Math.random() * 14);
             let new_block = document.createElement("div");
             new_block.className = "type type-5";
-            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
-            new_block.id = "type5";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
@@ -451,19 +427,12 @@
             new_block.color = getRandomColor(color);
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="type-5-1"><div class="block"></div><div class="block"></div></div><div class="type-5-2"><div class="block"></div><div class="block"></div></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function newBlock6() {
-            let random_pos = Math.floor(Math.random() * 15);
             let new_block = document.createElement("div");
             new_block.className = "type type-6";
-            new_block.setAttribute("style", "top:-2rem;left:" + random_pos + "rem");
-            new_block.id = "type6";
             new_block.isCurrent = true;
             new_block.state = 0;
             new_block.arr = [
@@ -473,11 +442,7 @@
             new_block.color = getRandomColor(color);
             new_block.boundary = getTypeCondition(new_block.arr);
             new_block.innerHTML = `<div class="block"></div><div class="type-6-1"><div class="block"></div><div class="block"></div></div>`;
-            main_area.prepend(new_block);
-            let color_blocks = document.querySelectorAll(".block");
-            for (let cb of color_blocks) {
-                cb.style.background = new_block.color[1];
-            }
+            return new_block
         }
 
         function getTypeCondition(arr) {
@@ -531,7 +496,7 @@
             start_popUp.style.display = "none";
             clearInterval(moveNewBlock);
             main_area.addEventListener("DOMNodeInserted", function () {
-                blocks = document.querySelectorAll(".type");
+                blocks = main_area.querySelectorAll(".type");
                 for (let item of blocks) {
                     if (item.isCurrent) {
                         moveNewBlock = setInterval(function () {
@@ -573,8 +538,11 @@
                     }
                 }
             })
+
+
             // 添加第一个block，触发listener
-            eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
+            addPreDom();
+            addMainDom();
 
 
             //control block moving
@@ -716,6 +684,32 @@
             }
         }
 
+
+        function addPreDom() {
+            let pre_block = eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
+            pre_pattern.prepend(pre_block);
+            setPrecolor(pre_block);
+        }
+
+        function addMainDom() {
+            let addblock = pre_pattern.querySelector(".type");
+            let random_pos = Math.floor(Math.random() * 13);
+            main_area.prepend(addblock);
+            addblock.setAttribute("style", "top:-1rem;left:" + random_pos + "rem;");
+            if (pre_pattern.querySelector(".type")) {
+                pre_pattern.querySelector(".type").remove();
+            }
+            addPreDom();
+        }
+
+        //set pre color
+        function setPrecolor(pre) {
+            let color_blocks = pre_pattern.querySelectorAll(".block");
+            console.log(color_blocks)
+            for (let cb of color_blocks) {
+                cb.style.background = pre.color[1];
+            }
+        }
         //  use arr to render blocks
         function refreshBlock() {
             let old_div = document.querySelectorAll(".block-arr");
@@ -789,7 +783,8 @@
                     return;
                 }
             }
-            eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
+            // eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
+            addMainDom();
         }
     </script>
 
