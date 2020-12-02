@@ -772,7 +772,6 @@
                 if (arr[0][item] != 0) {
                     clearInterval(moveNewBlock);
                     last_score.innerHTML = score;
-                    highest_score.innerHTML = localStorage.gameHightestScore;
                     end_popUp.style.display = "flex";
                     if (!localStorage.gameHightestScore) {
                         localStorage.gameHightestScore = 0;
@@ -780,6 +779,7 @@
                     if (localStorage.gameHightestScore < score) {
                         localStorage.setItem("gameHightestScore", score);
                     }
+                    highest_score.innerHTML = localStorage.gameHightestScore;
                     return;
                 }
             }
