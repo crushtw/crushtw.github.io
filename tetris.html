@@ -694,8 +694,9 @@
         function addMainDom() {
             let addblock = pre_pattern.querySelector(".type");
             let random_pos = Math.floor(Math.random() * 13);
+            let top_distance = -addblock.arr.length;
             main_area.prepend(addblock);
-            addblock.setAttribute("style", "top:-1rem;left:" + random_pos + "rem;");
+            addblock.setAttribute("style", "top:" + top_distance + "rem;left:" + random_pos + "rem;");
             if (pre_pattern.querySelector(".type")) {
                 pre_pattern.querySelector(".type").remove();
             }
