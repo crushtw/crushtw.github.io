@@ -4,16 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../WYZXW/CSS基础/reset.css">
+    <!-- <link rel="stylesheet" href="../../WYZXW/CSS基础/reset.css"> -->
     <title>tetris</title>
     <style>
         * {
             padding: 0;
             margin: 0;
+            /*给火狐浏览器使用，避免不兼容*/
+            -moz-box-sizing: border-box;
+            /* 给webkit内核浏览器，避免不兼容*/
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
         }
 
         html {
             font-size: 25px;
+        }
+
+        a,
+        a:hover,
+        a:active,
+        a:visited {
+            text-decoration: none;
+            color: #222222;
         }
 
         .container {
@@ -183,8 +196,8 @@
             border-radius: 5px;
             width: 4rem;
             height: 2rem;
+            font-size: 0.8rem;
             margin: 0.2rem 0.25rem;
-            text-align: center;
             line-height: 2rem;
         }
 
@@ -196,6 +209,8 @@
             width: 9rem;
             display: flex;
             flex-flow: wrap;
+            list-style: none;
+            text-align: center;
         }
 
         .tool {
@@ -214,16 +229,13 @@
         }
 
         .pre-pattern {
+            margin: 0 auto;
             width: 4rem;
             height: 4rem;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
-        /* .type {
-            transition: top 0.5s;
-        } */
     </style>
 </head>
 
@@ -231,6 +243,7 @@
     <div class="container">
         <div id="main_area" class="box">
             <div id="start_popUp" class="popUp">
+                <p>请选择颜色</p>
                 <ul onclick="getColor(event)">
                     <li class="color" style="border-color:green;background:#7bc9b0;">green</li>
                     <li class="color" style="border-color:pink">pink</li>
