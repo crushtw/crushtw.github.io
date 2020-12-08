@@ -15,11 +15,11 @@
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
         }
-
+        
         html {
             font-size: 25px;
         }
-
+        
         a,
         a:hover,
         a:active,
@@ -27,28 +27,28 @@
             text-decoration: none;
             color: #222222;
         }
-
+        
         .container {
-            width: 700px;
-            height: 620px;
-            margin: 50px auto;
+            width: 24rem;
+            height: 24rem;
+            margin: 50px auto 0;
             display: flex;
         }
-
+        
         .box {
-            width: 402px;
-            height: 602px;
+            width: 16rem;
+            height: 24rem;
             border: 1px black solid;
             position: relative;
             overflow: hidden;
         }
-
+        
         .block {
             width: 1rem;
             height: 1rem;
             border: 1px black solid;
         }
-
+        
         .block-arr {
             width: 1rem;
             height: 1rem;
@@ -56,14 +56,14 @@
             border: 1px black solid;
             position: absolute;
         }
-
+        
         .type-1 {
             display: flex;
             height: 1rem;
             width: 4rem;
             position: absolute;
         }
-
+        
         .type-2 {
             display: flex;
             flex-direction: column;
@@ -71,16 +71,16 @@
             width: 3rem;
             position: absolute;
         }
-
+        
         .type-2-1 {
             margin: 0 auto;
         }
-
+        
         .type-2-2 {
             display: flex;
             height: 1rem;
         }
-
+        
         .type-3 {
             display: flex;
             width: 2rem;
@@ -88,24 +88,24 @@
             flex-flow: wrap;
             position: absolute;
         }
-
+        
         .type-4 {
             display: flex;
             width: 2rem;
             height: 3rem;
             position: absolute;
         }
-
+        
         .type-4-1 {
             display: flex;
             flex-direction: column;
         }
-
+        
         .type-4-2 {
             display: flex;
             flex-direction: column-reverse;
         }
-
+        
         .type-5 {
             display: flex;
             flex-direction: column;
@@ -113,17 +113,17 @@
             height: 2rem;
             position: absolute;
         }
-
+        
         .type-5-1 {
             display: flex;
             flex-direction: row;
         }
-
+        
         .type-5-2 {
             display: flex;
             flex-direction: row-reverse;
         }
-
+        
         .type-6 {
             display: flex;
             flex-direction: column;
@@ -131,12 +131,12 @@
             height: 2rem;
             position: absolute;
         }
-
+        
         .type-6-1 {
             display: flex;
             flex-direction: row;
         }
-
+        
         .start {
             width: 4rem;
             height: 2rem;
@@ -146,11 +146,11 @@
             text-align: center;
             box-shadow: 1px 1px 3px 1px grey;
         }
-
+        
         .start:hover {
             cursor: pointer;
         }
-
+        
         .popUp {
             height: 14rem;
             width: 12rem;
@@ -163,47 +163,47 @@
             align-items: center;
             background: white;
         }
-
+        
         .over {
             font-size: 1.6rem;
             font-weight: 600;
         }
-
+        
         .score {
             font-size: 1.2rem
         }
-
+        
         .highest {
             font-size: 0.8rem
         }
-
+        
         .restart {
             width: 4rem;
             height: 2.5rem;
             border: 1px grey solid;
-            border-radius: 5px;
+            border-radius: 0.25rem;
             line-height: 2.5rem;
             text-align: center;
         }
-
+        
         .restart:hover {
             cursor: pointer;
         }
-
+        
         .color {
             border: 1px black solid;
-            border-radius: 5px;
+            border-radius: 0.25rem;
             width: 4rem;
             height: 2rem;
             font-size: 0.8rem;
             margin: 0.2rem 0.25rem;
             line-height: 2rem;
         }
-
+        
         .color:hover {
             cursor: pointer
         }
-
+        
         ul {
             width: 9rem;
             display: flex;
@@ -211,10 +211,10 @@
             list-style: none;
             text-align: center;
         }
-
+        
         .tool {
-            width: 202px;
-            height: 602px;
+            width: 8rem;
+            height: 24rem;
             border: 1px black solid;
             position: relative;
             display: flex;
@@ -222,11 +222,11 @@
             justify-content: space-around;
             align-items: center;
         }
-
+        
         .next-pattern-box {
             margin-bottom: 5rem;
         }
-
+        
         .pre-pattern {
             margin: 0 auto;
             width: 4rem;
@@ -234,6 +234,57 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        
+        .mobile-control {
+            display: none;
+        }
+        
+        @media screen and (max-width: 600px) {
+            html {
+                font-size: 3.5vh;
+            }
+            .container {
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                width: 100vw;
+            }
+            .box {
+                width: 56vh;
+                height: 84vh;
+                margin: 0 auto;
+                border: 1px black solid;
+                position: relative;
+                overflow: hidden;
+            }
+            .tool {
+                width: 56vh;
+                height: 16vh;
+                margin: 0 auto;
+                border: 1px black solid;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .score {
+                font-size: 0.7rem;
+            }
+            .next-pattern-box {
+                height: 100%;
+                margin: 0;
+                font-size: 0.6rem;
+            }
+            .next-pattern-box p {
+                text-align: center;
+            }
+            .mobile-control {
+                display: block;
+                background: red;
+                width: 4rem;
+                height: 4rem;
+            }
         }
     </style>
 </head>
@@ -268,6 +319,7 @@
 
                 </div>
             </div>
+            <div class="mobile-control"></div>
         </div>
     </div>
     <script>
@@ -507,11 +559,11 @@
         function clickToStart() {
             start_popUp.style.display = "none";
             clearInterval(moveNewBlock);
-            main_area.addEventListener("DOMNodeInserted", function () {
+            main_area.addEventListener("DOMNodeInserted", function() {
                 blocks = main_area.querySelectorAll(".type");
                 for (let item of blocks) {
                     if (item.isCurrent) {
-                        moveNewBlock = setInterval(function () {
+                        moveNewBlock = setInterval(function() {
                             let cur_row = parseFloat(item.style.top);
                             let cur_col = parseFloat(item.style.left);
                             temporaryArr = [];
@@ -558,7 +610,7 @@
 
 
             //control block moving
-            document.onkeydown = function (ev) {
+            document.onkeydown = function(ev) {
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
