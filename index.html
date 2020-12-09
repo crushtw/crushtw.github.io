@@ -666,7 +666,6 @@
                 }
                 //mobile control block moving
             arrowleft.addEventListener("touchstart", function() {
-                arrowleft.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -679,7 +678,6 @@
 
             })
             arrowright.addEventListener("touchstart", function() {
-                arrowright.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -692,7 +690,6 @@
 
             })
             arrowdown.addEventListener("touchstart", function() {
-                arrowdown.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -705,7 +702,6 @@
 
             })
             arrowup.addEventListener("touchstart", function() {
-                arrowup.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -717,12 +713,6 @@
                 }
 
             })
-            let arrow_control = document.querySelectorAll(".control-arrow");
-            for (let arrows of arrow_control) {
-                arrows.addEventListener("touchend", function() {
-                    arrows.style.background = "none";
-                })
-            }
         }
         //function move to left 
         function leftArrow(isMove, item, cur_row, cur_col) {
