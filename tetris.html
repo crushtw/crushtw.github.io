@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tetris</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         * {
             padding: 0;
@@ -227,10 +229,14 @@
             margin-bottom: 5rem;
         }
         
+        .next-pattern-box p {
+            text-align: center;
+        }
+        
         .pre-pattern {
             margin: 0 auto;
             width: 4rem;
-            height: 4rem;
+            height: 3rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -276,14 +282,28 @@
                 margin: 0;
                 font-size: 0.6rem;
             }
-            .next-pattern-box p {
-                text-align: center;
-            }
             .mobile-control {
-                display: block;
-                background: red;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 width: 4rem;
                 height: 4rem;
+            }
+            .control-arrow {
+                height: 1.2rem;
+                width: 1.2rem;
+                font-size: 1.1rem;
+                line-height: 1.2rem;
+                text-align: center;
+            }
+            .control-arrow:hover {
+                cursor: pointer;
+            }
+            .l-r-arrow {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
             }
         }
     </style>
@@ -319,7 +339,14 @@
 
                 </div>
             </div>
-            <div class="mobile-control"></div>
+            <div class="mobile-control">
+                <div id="arrowup" class="glyphicon glyphicon-arrow-up control-arrow"></div>
+                <div class="l-r-arrow">
+                    <div id="arrowleft" class="glyphicon glyphicon-arrow-left control-arrow"></div>
+                    <div id="arrowright" class="glyphicon glyphicon-arrow-right control-arrow"></div>
+                </div>
+                <div id="arrowdown" class="glyphicon glyphicon-arrow-down control-arrow"></div>
+            </div>
         </div>
     </div>
     <script>
@@ -331,6 +358,10 @@
         let last_score = document.getElementById("last_score");
         let highest_score = document.getElementById("highest_score");
         let pre_pattern = document.getElementById("pre_pattern");
+        let arrowleft = document.getElementById("arrowleft");
+        let arrowright = document.getElementById("arrowright");
+        let arrowup = document.getElementById("arrowup");
+        let arrowdown = document.getElementById("arrowdown");
         let blocks;
         let moveNewBlock;
         let temporaryArr;
@@ -609,145 +640,209 @@
             addMainDom();
 
 
-            //control block moving
+            //PC control block moving
             document.onkeydown = function(ev) {
+                    let isMove;
+                    for (let item of blocks) {
+                        let cur_row = parseFloat(item.style.top);
+                        let cur_col = parseFloat(item.style.left);
+                        if (item.isCurrent) {
+                            switch (ev.keyCode) {
+                                case 37:
+                                    leftArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 39:
+                                    rightArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 40:
+                                    downArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 38:
+                                    upArrow(isMove, item, cur_row, cur_col);
+                            }
+                        }
+
+                    }
+                }
+                //mobile control block moving
+            arrowleft.addEventListener("touchstart", function() {
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
                     let cur_col = parseFloat(item.style.left);
                     if (item.isCurrent) {
-                        switch (ev.keyCode) {
-                            case 37:
-                                temporaryArr = [];
-                                for (let pos in item.boundary["left"]) {
-                                    let row = item.boundary["left"][pos][0] + cur_row;
-                                    let col = item.boundary["left"][pos][1] + cur_col;
-                                    // if row<0,can't get arr and error
-                                    row = row < 0 ? 0 : row;
-                                    if (col != 0 && arr[row][col - 1] == 0) {
-                                        temporaryArr.push(1);
-                                    } else {
-                                        temporaryArr.push(0);
-                                    }
-                                }
-                                isMove = !temporaryArr.includes(0);
-                                if (isMove) {
-                                    item.style.left = parseFloat(item.style.left) - 1 + "rem";
-                                }
-                                break;
-                            case 39:
-                                temporaryArr = [];
-                                for (let pos in item.boundary["right"]) {
-                                    let row = item.boundary["right"][pos][0] + cur_row;
-                                    let col = item.boundary["right"][pos][1] + cur_col;
-                                    row = row < 0 ? 0 : row;
-                                    if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
-                                        temporaryArr.push(1);
-                                    } else {
-                                        temporaryArr.push(0);
-                                    }
-                                }
-                                isMove = !temporaryArr.includes(0);
-                                if (isMove) {
-                                    item.style.left = parseFloat(item.style.left) + 1 + "rem";
-                                }
-                                break;
-                            case 40:
-                                clearInterval(moveNewBlock);
-                                let min_distance = 100;
-                                for (let pos in item.boundary["bottom"]) {
-                                    let row = item.boundary["bottom"][pos][0] + cur_row;
-                                    let col = item.boundary["bottom"][pos][1] + cur_col;
-                                    row = row < -1 ? -1 : row;
-                                    for (let i = row + 1; i < arr.length; i++) {
-                                        if (arr[i][col] != 0) {
-                                            if (i - row - 1 < min_distance) {
-                                                min_distance = i - row - 1;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (min_distance == 100) {
-                                    item.style.top = arr.length - item.arr.length + "rem";
-                                } else {
-                                    item.style.top = min_distance + parseFloat(item.style.top) + "rem";
-                                }
-                                cur_row = parseFloat(item.style.top);
-                                cur_col = parseFloat(item.style.left);
-                                for (let direction in item.boundary) {
-                                    for (let index in item.boundary[direction]) {
-                                        let row = item.boundary[direction][index][0] + cur_row;
-                                        let col = item.boundary[direction][index][1] + cur_col;
-                                        row = row < 0 ? 0 : row;
-                                        arr[row][col] = item.color[0];
-                                    }
-                                }
-                                item.remove();
-                                refreshBlock();
-                                fullRemove();
-                                // console.log(arr);
-                                isOver();
-                                break;
-                            case 38:
-                                let judge_arr = transpose(item.arr);
-                                let judge_boundary = getTypeCondition(judge_arr);
-                                let isFarthest = cur_col + judge_arr[0].length <= 16;
-                                let isHasBlocksArr = [];
-                                for (let direction in judge_boundary) {
-                                    for (let block_site in judge_boundary[direction]) {
-                                        let row = judge_boundary[direction][block_site][0] + cur_row;
-                                        let col = judge_boundary[direction][block_site][1] + cur_col;
-                                        row = row < 0 ? 0 : row;
-                                        if (arr[row][col] == 0) { //moving
-                                            isHasBlocksArr.push(0);
-                                        } else { //no moving
-                                            isHasBlocksArr.push[1];
-                                            return;
-                                        }
-                                    }
-                                }
-                                let isHasBlocks = !isHasBlocksArr.includes(1);
-                                if (isFarthest & isHasBlocks) {
-                                    switch (item.state) {
-                                        case 0:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(90deg) translate(0,-100%)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 1;
-                                            break;
-                                        case 1:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(180deg) translate(-100%,-100%)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 2;
-                                            break;
-                                        case 2:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(270deg) translate(-100%,0)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 3;
-                                            break;
-                                        case 3:
-                                            item.style.transform = "none";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 0;
-                                            break;
-                                    }
+                        leftArrow(isMove, item, cur_row, cur_col);
+                    }
 
+                }
 
-                                }
+            })
+            arrowright.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        rightArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+            arrowdown.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        downArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+            arrowup.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        upArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+        }
+
+        //function move to left 
+        function leftArrow(isMove, item, cur_row, cur_col) {
+            temporaryArr = [];
+            for (let pos in item.boundary["left"]) {
+                let row = item.boundary["left"][pos][0] + cur_row;
+                let col = item.boundary["left"][pos][1] + cur_col;
+                // if row<0,can't get arr and error
+                row = row < 0 ? 0 : row;
+                if (col != 0 && arr[row][col - 1] == 0) {
+                    temporaryArr.push(1);
+                } else {
+                    temporaryArr.push(0);
+                }
+            }
+            isMove = !temporaryArr.includes(0);
+            if (isMove) {
+                item.style.left = parseFloat(item.style.left) - 1 + "rem";
+            }
+        }
+        // function move to right
+        function rightArrow(isMove, item, cur_row, cur_col) {
+            temporaryArr = [];
+            for (let pos in item.boundary["right"]) {
+                let row = item.boundary["right"][pos][0] + cur_row;
+                let col = item.boundary["right"][pos][1] + cur_col;
+                row = row < 0 ? 0 : row;
+                if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
+                    temporaryArr.push(1);
+                } else {
+                    temporaryArr.push(0);
+                }
+            }
+            isMove = !temporaryArr.includes(0);
+            if (isMove) {
+                item.style.left = parseFloat(item.style.left) + 1 + "rem";
+            }
+        }
+        // function move to down
+        function downArrow(isMove, item, cur_row, cur_col) {
+            clearInterval(moveNewBlock);
+            let min_distance = 100;
+            for (let pos in item.boundary["bottom"]) {
+                let row = item.boundary["bottom"][pos][0] + cur_row;
+                let col = item.boundary["bottom"][pos][1] + cur_col;
+                row = row < -1 ? -1 : row;
+                for (let i = row + 1; i < arr.length; i++) {
+                    if (arr[i][col] != 0) {
+                        if (i - row - 1 < min_distance) {
+                            min_distance = i - row - 1;
                         }
-
+                        break;
                     }
                 }
             }
+            if (min_distance == 100) {
+                item.style.top = arr.length - item.arr.length + "rem";
+            } else {
+                item.style.top = min_distance + parseFloat(item.style.top) + "rem";
+            }
+            cur_row = parseFloat(item.style.top);
+            cur_col = parseFloat(item.style.left);
+            for (let direction in item.boundary) {
+                for (let index in item.boundary[direction]) {
+                    let row = item.boundary[direction][index][0] + cur_row;
+                    let col = item.boundary[direction][index][1] + cur_col;
+                    row = row < 0 ? 0 : row;
+                    arr[row][col] = item.color[0];
+                }
+            }
+            item.remove();
+            refreshBlock();
+            fullRemove();
+            // console.log(arr);
+            isOver();
         }
+        // function change direction
+        function upArrow(isMove, item, cur_row, cur_col) {
+            let judge_arr = transpose(item.arr);
+            let judge_boundary = getTypeCondition(judge_arr);
+            let isFarthest = cur_col + judge_arr[0].length <= 16;
+            let isHasBlocksArr = [];
+            for (let direction in judge_boundary) {
+                for (let block_site in judge_boundary[direction]) {
+                    let row = judge_boundary[direction][block_site][0] + cur_row;
+                    let col = judge_boundary[direction][block_site][1] + cur_col;
+                    row = row < 0 ? 0 : row;
+                    if (arr[row][col] == 0) { //moving
+                        isHasBlocksArr.push(0);
+                    } else { //no moving
+                        isHasBlocksArr.push[1];
+                        return;
+                    }
+                }
+            }
+            let isHasBlocks = !isHasBlocksArr.includes(1);
+            if (isFarthest & isHasBlocks) {
+                switch (item.state) {
+                    case 0:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(90deg) translate(0,-100%)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 1;
+                        break;
+                    case 1:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(180deg) translate(-100%,-100%)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 2;
+                        break;
+                    case 2:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(270deg) translate(-100%,0)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 3;
+                        break;
+                    case 3:
+                        item.style.transform = "none";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 0;
+                        break;
+                }
 
+            }
+        }
 
         function addPreDom() {
             let pre_block = eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
@@ -793,7 +888,6 @@
                 }
             }
         }
-
         //if full row ,remove and calculate score
         function fullRemove() {
             let time = 0;
