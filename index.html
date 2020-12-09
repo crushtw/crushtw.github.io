@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tetris</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         * {
             padding: 0;
@@ -15,11 +17,11 @@
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
         }
-
+        
         html {
             font-size: 25px;
         }
-
+        
         a,
         a:hover,
         a:active,
@@ -27,28 +29,28 @@
             text-decoration: none;
             color: #222222;
         }
-
+        
         .container {
-            width: 700px;
-            height: 620px;
-            margin: 50px auto;
+            width: 24rem;
+            height: 24rem;
+            margin: 50px auto 0;
             display: flex;
         }
-
+        
         .box {
-            width: 402px;
-            height: 602px;
+            width: 16rem;
+            height: 24rem;
             border: 1px black solid;
             position: relative;
             overflow: hidden;
         }
-
+        
         .block {
             width: 1rem;
             height: 1rem;
             border: 1px black solid;
         }
-
+        
         .block-arr {
             width: 1rem;
             height: 1rem;
@@ -56,14 +58,14 @@
             border: 1px black solid;
             position: absolute;
         }
-
+        
         .type-1 {
             display: flex;
             height: 1rem;
             width: 4rem;
             position: absolute;
         }
-
+        
         .type-2 {
             display: flex;
             flex-direction: column;
@@ -71,16 +73,16 @@
             width: 3rem;
             position: absolute;
         }
-
+        
         .type-2-1 {
             margin: 0 auto;
         }
-
+        
         .type-2-2 {
             display: flex;
             height: 1rem;
         }
-
+        
         .type-3 {
             display: flex;
             width: 2rem;
@@ -88,24 +90,24 @@
             flex-flow: wrap;
             position: absolute;
         }
-
+        
         .type-4 {
             display: flex;
             width: 2rem;
             height: 3rem;
             position: absolute;
         }
-
+        
         .type-4-1 {
             display: flex;
             flex-direction: column;
         }
-
+        
         .type-4-2 {
             display: flex;
             flex-direction: column-reverse;
         }
-
+        
         .type-5 {
             display: flex;
             flex-direction: column;
@@ -113,17 +115,17 @@
             height: 2rem;
             position: absolute;
         }
-
+        
         .type-5-1 {
             display: flex;
             flex-direction: row;
         }
-
+        
         .type-5-2 {
             display: flex;
             flex-direction: row-reverse;
         }
-
+        
         .type-6 {
             display: flex;
             flex-direction: column;
@@ -131,12 +133,12 @@
             height: 2rem;
             position: absolute;
         }
-
+        
         .type-6-1 {
             display: flex;
             flex-direction: row;
         }
-
+        
         .start {
             width: 4rem;
             height: 2rem;
@@ -146,11 +148,11 @@
             text-align: center;
             box-shadow: 1px 1px 3px 1px grey;
         }
-
+        
         .start:hover {
             cursor: pointer;
         }
-
+        
         .popUp {
             height: 14rem;
             width: 12rem;
@@ -163,47 +165,47 @@
             align-items: center;
             background: white;
         }
-
+        
         .over {
             font-size: 1.6rem;
             font-weight: 600;
         }
-
+        
         .score {
             font-size: 1.2rem
         }
-
+        
         .highest {
             font-size: 0.8rem
         }
-
+        
         .restart {
             width: 4rem;
             height: 2.5rem;
             border: 1px grey solid;
-            border-radius: 5px;
+            border-radius: 0.25rem;
             line-height: 2.5rem;
             text-align: center;
         }
-
+        
         .restart:hover {
             cursor: pointer;
         }
-
+        
         .color {
             border: 1px black solid;
-            border-radius: 5px;
+            border-radius: 0.25rem;
             width: 4rem;
             height: 2rem;
             font-size: 0.8rem;
             margin: 0.2rem 0.25rem;
             line-height: 2rem;
         }
-
+        
         .color:hover {
             cursor: pointer
         }
-
+        
         ul {
             width: 9rem;
             display: flex;
@@ -211,10 +213,10 @@
             list-style: none;
             text-align: center;
         }
-
+        
         .tool {
-            width: 202px;
-            height: 602px;
+            width: 8rem;
+            height: 24rem;
             border: 1px black solid;
             position: relative;
             display: flex;
@@ -222,18 +224,87 @@
             justify-content: space-around;
             align-items: center;
         }
-
+        
         .next-pattern-box {
             margin-bottom: 5rem;
         }
-
+        
+        .next-pattern-box p {
+            text-align: center;
+        }
+        
         .pre-pattern {
             margin: 0 auto;
             width: 4rem;
-            height: 4rem;
+            height: 3rem;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        
+        .mobile-control {
+            display: none;
+        }
+        
+        @media screen and (max-width: 600px) {
+            html {
+                font-size: 3.5vh;
+            }
+            .container {
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                width: 100vw;
+            }
+            .box {
+                width: 56vh;
+                height: 84vh;
+                margin: 0 auto;
+                border: 1px black solid;
+                position: relative;
+                overflow: hidden;
+            }
+            .tool {
+                width: 56vh;
+                height: 16vh;
+                margin: 0 auto;
+                border: 1px black solid;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .score {
+                font-size: 0.7rem;
+            }
+            .next-pattern-box {
+                height: 100%;
+                margin: 0;
+                font-size: 0.6rem;
+            }
+            .mobile-control {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 4rem;
+                height: 4rem;
+            }
+            .control-arrow {
+                height: 1.2rem;
+                width: 1.2rem;
+                font-size: 1.1rem;
+                line-height: 1.2rem;
+                text-align: center;
+            }
+            .control-arrow:hover {
+                cursor: pointer;
+            }
+            .l-r-arrow {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
@@ -268,6 +339,14 @@
 
                 </div>
             </div>
+            <div class="mobile-control">
+                <div id="arrowup" class="glyphicon glyphicon-arrow-up control-arrow"></div>
+                <div class="l-r-arrow">
+                    <div id="arrowleft" class="glyphicon glyphicon-arrow-left control-arrow"></div>
+                    <div id="arrowright" class="glyphicon glyphicon-arrow-right control-arrow"></div>
+                </div>
+                <div id="arrowdown" class="glyphicon glyphicon-arrow-down control-arrow"></div>
+            </div>
         </div>
     </div>
     <script>
@@ -279,6 +358,10 @@
         let last_score = document.getElementById("last_score");
         let highest_score = document.getElementById("highest_score");
         let pre_pattern = document.getElementById("pre_pattern");
+        let arrowleft = document.getElementById("arrowleft");
+        let arrowright = document.getElementById("arrowright");
+        let arrowup = document.getElementById("arrowup");
+        let arrowdown = document.getElementById("arrowdown");
         let blocks;
         let moveNewBlock;
         let temporaryArr;
@@ -507,11 +590,11 @@
         function clickToStart() {
             start_popUp.style.display = "none";
             clearInterval(moveNewBlock);
-            main_area.addEventListener("DOMNodeInserted", function () {
+            main_area.addEventListener("DOMNodeInserted", function() {
                 blocks = main_area.querySelectorAll(".type");
                 for (let item of blocks) {
                     if (item.isCurrent) {
-                        moveNewBlock = setInterval(function () {
+                        moveNewBlock = setInterval(function() {
                             let cur_row = parseFloat(item.style.top);
                             let cur_col = parseFloat(item.style.left);
                             temporaryArr = [];
@@ -557,145 +640,209 @@
             addMainDom();
 
 
-            //control block moving
-            document.onkeydown = function (ev) {
+            //PC control block moving
+            document.onkeydown = function(ev) {
+                    let isMove;
+                    for (let item of blocks) {
+                        let cur_row = parseFloat(item.style.top);
+                        let cur_col = parseFloat(item.style.left);
+                        if (item.isCurrent) {
+                            switch (ev.keyCode) {
+                                case 37:
+                                    leftArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 39:
+                                    rightArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 40:
+                                    downArrow(isMove, item, cur_row, cur_col);
+                                    break;
+                                case 38:
+                                    upArrow(isMove, item, cur_row, cur_col);
+                            }
+                        }
+
+                    }
+                }
+                //mobile control block moving
+            arrowleft.addEventListener("touchstart", function() {
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
                     let cur_col = parseFloat(item.style.left);
                     if (item.isCurrent) {
-                        switch (ev.keyCode) {
-                            case 37:
-                                temporaryArr = [];
-                                for (let pos in item.boundary["left"]) {
-                                    let row = item.boundary["left"][pos][0] + cur_row;
-                                    let col = item.boundary["left"][pos][1] + cur_col;
-                                    // if row<0,can't get arr and error
-                                    row = row < 0 ? 0 : row;
-                                    if (col != 0 && arr[row][col - 1] == 0) {
-                                        temporaryArr.push(1);
-                                    } else {
-                                        temporaryArr.push(0);
-                                    }
-                                }
-                                isMove = !temporaryArr.includes(0);
-                                if (isMove) {
-                                    item.style.left = parseFloat(item.style.left) - 1 + "rem";
-                                }
-                                break;
-                            case 39:
-                                temporaryArr = [];
-                                for (let pos in item.boundary["right"]) {
-                                    let row = item.boundary["right"][pos][0] + cur_row;
-                                    let col = item.boundary["right"][pos][1] + cur_col;
-                                    row = row < 0 ? 0 : row;
-                                    if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
-                                        temporaryArr.push(1);
-                                    } else {
-                                        temporaryArr.push(0);
-                                    }
-                                }
-                                isMove = !temporaryArr.includes(0);
-                                if (isMove) {
-                                    item.style.left = parseFloat(item.style.left) + 1 + "rem";
-                                }
-                                break;
-                            case 40:
-                                clearInterval(moveNewBlock);
-                                let min_distance = 100;
-                                for (let pos in item.boundary["bottom"]) {
-                                    let row = item.boundary["bottom"][pos][0] + cur_row;
-                                    let col = item.boundary["bottom"][pos][1] + cur_col;
-                                    row = row < -1 ? -1 : row;
-                                    for (let i = row + 1; i < arr.length; i++) {
-                                        if (arr[i][col] != 0) {
-                                            if (i - row - 1 < min_distance) {
-                                                min_distance = i - row - 1;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (min_distance == 100) {
-                                    item.style.top = arr.length - item.arr.length + "rem";
-                                } else {
-                                    item.style.top = min_distance + parseFloat(item.style.top) + "rem";
-                                }
-                                cur_row = parseFloat(item.style.top);
-                                cur_col = parseFloat(item.style.left);
-                                for (let direction in item.boundary) {
-                                    for (let index in item.boundary[direction]) {
-                                        let row = item.boundary[direction][index][0] + cur_row;
-                                        let col = item.boundary[direction][index][1] + cur_col;
-                                        row = row < 0 ? 0 : row;
-                                        arr[row][col] = item.color[0];
-                                    }
-                                }
-                                item.remove();
-                                refreshBlock();
-                                fullRemove();
-                                // console.log(arr);
-                                isOver();
-                                break;
-                            case 38:
-                                let judge_arr = transpose(item.arr);
-                                let judge_boundary = getTypeCondition(judge_arr);
-                                let isFarthest = cur_col + judge_arr[0].length <= 16;
-                                let isHasBlocksArr = [];
-                                for (let direction in judge_boundary) {
-                                    for (let block_site in judge_boundary[direction]) {
-                                        let row = judge_boundary[direction][block_site][0] + cur_row;
-                                        let col = judge_boundary[direction][block_site][1] + cur_col;
-                                        row = row < 0 ? 0 : row;
-                                        if (arr[row][col] == 0) { //moving
-                                            isHasBlocksArr.push(0);
-                                        } else { //no moving
-                                            isHasBlocksArr.push[1];
-                                            return;
-                                        }
-                                    }
-                                }
-                                let isHasBlocks = !isHasBlocksArr.includes(1);
-                                if (isFarthest & isHasBlocks) {
-                                    switch (item.state) {
-                                        case 0:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(90deg) translate(0,-100%)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 1;
-                                            break;
-                                        case 1:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(180deg) translate(-100%,-100%)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 2;
-                                            break;
-                                        case 2:
-                                            item.style.transformOrigin = "0 0";
-                                            item.style.transform = "rotate(270deg) translate(-100%,0)";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 3;
-                                            break;
-                                        case 3:
-                                            item.style.transform = "none";
-                                            item.arr = judge_arr;
-                                            item.boundary = getTypeCondition(item.arr);
-                                            item.state = 0;
-                                            break;
-                                    }
+                        leftArrow(isMove, item, cur_row, cur_col);
+                    }
 
+                }
 
-                                }
+            })
+            arrowright.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        rightArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+            arrowdown.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        downArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+            arrowup.addEventListener("touchstart", function() {
+                let isMove;
+                for (let item of blocks) {
+                    let cur_row = parseFloat(item.style.top);
+                    let cur_col = parseFloat(item.style.left);
+                    if (item.isCurrent) {
+                        upArrow(isMove, item, cur_row, cur_col);
+                    }
+
+                }
+
+            })
+        }
+
+        //function move to left 
+        function leftArrow(isMove, item, cur_row, cur_col) {
+            temporaryArr = [];
+            for (let pos in item.boundary["left"]) {
+                let row = item.boundary["left"][pos][0] + cur_row;
+                let col = item.boundary["left"][pos][1] + cur_col;
+                // if row<0,can't get arr and error
+                row = row < 0 ? 0 : row;
+                if (col != 0 && arr[row][col - 1] == 0) {
+                    temporaryArr.push(1);
+                } else {
+                    temporaryArr.push(0);
+                }
+            }
+            isMove = !temporaryArr.includes(0);
+            if (isMove) {
+                item.style.left = parseFloat(item.style.left) - 1 + "rem";
+            }
+        }
+        // function move to right
+        function rightArrow(isMove, item, cur_row, cur_col) {
+            temporaryArr = [];
+            for (let pos in item.boundary["right"]) {
+                let row = item.boundary["right"][pos][0] + cur_row;
+                let col = item.boundary["right"][pos][1] + cur_col;
+                row = row < 0 ? 0 : row;
+                if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
+                    temporaryArr.push(1);
+                } else {
+                    temporaryArr.push(0);
+                }
+            }
+            isMove = !temporaryArr.includes(0);
+            if (isMove) {
+                item.style.left = parseFloat(item.style.left) + 1 + "rem";
+            }
+        }
+        // function move to down
+        function downArrow(isMove, item, cur_row, cur_col) {
+            clearInterval(moveNewBlock);
+            let min_distance = 100;
+            for (let pos in item.boundary["bottom"]) {
+                let row = item.boundary["bottom"][pos][0] + cur_row;
+                let col = item.boundary["bottom"][pos][1] + cur_col;
+                row = row < -1 ? -1 : row;
+                for (let i = row + 1; i < arr.length; i++) {
+                    if (arr[i][col] != 0) {
+                        if (i - row - 1 < min_distance) {
+                            min_distance = i - row - 1;
                         }
-
+                        break;
                     }
                 }
             }
+            if (min_distance == 100) {
+                item.style.top = arr.length - item.arr.length + "rem";
+            } else {
+                item.style.top = min_distance + parseFloat(item.style.top) + "rem";
+            }
+            cur_row = parseFloat(item.style.top);
+            cur_col = parseFloat(item.style.left);
+            for (let direction in item.boundary) {
+                for (let index in item.boundary[direction]) {
+                    let row = item.boundary[direction][index][0] + cur_row;
+                    let col = item.boundary[direction][index][1] + cur_col;
+                    row = row < 0 ? 0 : row;
+                    arr[row][col] = item.color[0];
+                }
+            }
+            item.remove();
+            refreshBlock();
+            fullRemove();
+            // console.log(arr);
+            isOver();
         }
+        // function change direction
+        function upArrow(isMove, item, cur_row, cur_col) {
+            let judge_arr = transpose(item.arr);
+            let judge_boundary = getTypeCondition(judge_arr);
+            let isFarthest = cur_col + judge_arr[0].length <= 16;
+            let isHasBlocksArr = [];
+            for (let direction in judge_boundary) {
+                for (let block_site in judge_boundary[direction]) {
+                    let row = judge_boundary[direction][block_site][0] + cur_row;
+                    let col = judge_boundary[direction][block_site][1] + cur_col;
+                    row = row < 0 ? 0 : row;
+                    if (arr[row][col] == 0) { //moving
+                        isHasBlocksArr.push(0);
+                    } else { //no moving
+                        isHasBlocksArr.push[1];
+                        return;
+                    }
+                }
+            }
+            let isHasBlocks = !isHasBlocksArr.includes(1);
+            if (isFarthest & isHasBlocks) {
+                switch (item.state) {
+                    case 0:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(90deg) translate(0,-100%)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 1;
+                        break;
+                    case 1:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(180deg) translate(-100%,-100%)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 2;
+                        break;
+                    case 2:
+                        item.style.transformOrigin = "0 0";
+                        item.style.transform = "rotate(270deg) translate(-100%,0)";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 3;
+                        break;
+                    case 3:
+                        item.style.transform = "none";
+                        item.arr = judge_arr;
+                        item.boundary = getTypeCondition(item.arr);
+                        item.state = 0;
+                        break;
+                }
 
+            }
+        }
 
         function addPreDom() {
             let pre_block = eval("newBlock" + Math.floor(Math.random() * 6 + 1) + "()");
@@ -741,7 +888,6 @@
                 }
             }
         }
-
         //if full row ,remove and calculate score
         function fullRemove() {
             let time = 0;
