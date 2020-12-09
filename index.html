@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0，maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，maximum-scale=1.0, user-scalable=no">
     <title>tetris</title>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -666,6 +666,7 @@
                 }
                 //mobile control block moving
             arrowleft.addEventListener("touchstart", function() {
+                arrowleft.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -678,6 +679,7 @@
 
             })
             arrowright.addEventListener("touchstart", function() {
+                arrowright.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -690,6 +692,7 @@
 
             })
             arrowdown.addEventListener("touchstart", function() {
+                arrowdown.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -702,6 +705,7 @@
 
             })
             arrowup.addEventListener("touchstart", function() {
+                arrowup.style.background = "grey"
                 let isMove;
                 for (let item of blocks) {
                     let cur_row = parseFloat(item.style.top);
@@ -713,8 +717,13 @@
                 }
 
             })
+            let arrow_control = document.querySelectorAll(".control-arrow");
+            for (let arrows of arrow_control) {
+                arrows.addEventListener("touchend", function() {
+                    arrows.style.background = "none";
+                })
+            }
         }
-
         //function move to left 
         function leftArrow(isMove, item, cur_row, cur_col) {
             temporaryArr = [];
