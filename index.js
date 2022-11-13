@@ -21,7 +21,7 @@ let scoring_rules = {
     3: 600,
     4: 1000
 };
-let all_color = {
+let allColor = {
     green: {
         1: "#3f8a87",
         2: "#2f6e59",
@@ -73,119 +73,94 @@ let all_color = {
 }
 let color = "green";
 
+let arrRow = (new Array(16)).fill(0);
+let arr = (new Array(24)).fill(0).map(_ => [...arrRow]);
 
-let arr = new Array;
-for (let i = 0; i < 24; i++) {
-    arr[i] = new Array;
-    for (let j = 0; j < 16; j++) {
-        arr[i][j] = 0;
-    }
-}
 // choose game color
 function getColor(ev) {
     color = ev.target.innerHTML;
+    if (!Object.keys(allColor).includes(color)) return;
     let backcolor = document.querySelectorAll("li");
     for (let item of backcolor) {
         item.style.background = "";
     }
-    ev.target.style.background = all_color[color][3];
+    ev.target.style.background = allColor[color][3];
 }
-//got an array about ranNum and random color
+
 function getRandomColor(color) {
     let ranNum = Math.floor(Math.random() * 5 + 1);
-    return [ranNum, all_color[color][ranNum]];
+    return allColor[color][ranNum];
 }
 
-
+function createBlock (props) {
+    let new_block = document.createElement("div");
+    new_block.className = `type ${props.className}`;
+    new_block.state = 0;
+    new_block.arr = props.arr;
+    new_block.color = getRandomColor(color);
+    new_block.boundary = getTypeCondition(props.arr);
+    new_block.innerHTML = props.innerHTML
+    return new_block;
+}
 
 function newBlock1() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-1";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-1";
+    const arr = [
         [1, 1, 1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
-    return new_block
+    const innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function newBlock2() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-2";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-2";
+    const arr = [
         [0, 1, 0],
         [1, 1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="block type-2-1"></div><div class="type-2-2"><div class="block"></div><div class="block"></div><div class="block"></div></div>`;
-    return new_block
+    const innerHTML = `<div class="block type-2-1"></div><div class="type-2-2"><div class="block"></div><div class="block"></div><div class="block"></div></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function newBlock3() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-3";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-3";
+    const arr = [
         [1, 1],
         [1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
-    return new_block
+    const innerHTML = `<div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function newBlock4() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-4";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-4";
+    const arr = [
         [1, 0],
         [1, 0],
         [1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="type-4-1"><div class="block"></div><div class="block"></div><div class="block"></div></div><div class="type-4-2"><div class="block"></div></div>`;
-    return new_block
+    const innerHTML = `<div class="type-4-1"><div class="block"></div><div class="block"></div><div class="block"></div></div><div class="type-4-2"><div class="block"></div></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function newBlock5() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-5";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-5";
+    const arr = [
         [1, 1, 0],
         [0, 1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="type-5-1"><div class="block"></div><div class="block"></div></div><div class="type-5-2"><div class="block"></div><div class="block"></div></div>`;
-    return new_block
+    const innerHTML = `<div class="type-5-1"><div class="block"></div><div class="block"></div></div><div class="type-5-2"><div class="block"></div><div class="block"></div></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function newBlock6() {
-    let new_block = document.createElement("div");
-    new_block.className = "type type-6";
-    new_block.isCurrent = true;
-    new_block.state = 0;
-    new_block.arr = [
+    const className = "type-6";
+    const arr = [
         [1, 0],
         [1, 1]
     ];
-    new_block.color = getRandomColor(color);
-    new_block.boundary = getTypeCondition(new_block.arr);
-    new_block.innerHTML = `<div class="block"></div><div class="type-6-1"><div class="block"></div><div class="block"></div></div>`;
-    return new_block
+    const innerHTML = `<div class="block"></div><div class="type-6-1"><div class="block"></div><div class="block"></div></div>`;
+    return createBlock({className, arr, innerHTML});
 }
 
 function getTypeCondition(arr) {
@@ -195,40 +170,22 @@ function getTypeCondition(arr) {
         bottom: {},
         top: {}
     };
+
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[i].length; j++) {
-            if (j == 0 && arr[i][j] != 0) {
-                type_condition["left"][i] = [i, j];
-            } else if (arr[i][j] != 0 && arr[i][j - 1] == 0) {
-                type_condition["left"][i] = [i, j];
-            }
-        }
-    }
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-            if (j == arr[i].length - 1 && arr[i][j] != 0) {
-                type_condition["right"][i] = [i, j];
-            } else if (arr[i][j] != 0 && arr[i][j + 1] == 0) {
-                type_condition["right"][i] = [i, j];
-            }
-        }
-    }
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-            if (i == arr.length - 1 && arr[i][j] != 0) {
-                type_condition["bottom"][j] = [i, j];
-            } else if (arr[i][j] != 0 && arr[i + 1][j] == 0) {
-                type_condition["bottom"][j] = [i, j];
-            }
-        }
-    }
-    //some type will lose middle block without top position while changing direction
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-            if (i == 0 && arr[i][j] != 0) {
-                type_condition["top"][j] = [i, j];
-            } else if (arr[i][j] != 0 && arr[i - 1][j] == 0) {
-                type_condition["top"][j] = [i, j];
+            if (arr[i][j] !== 0) {
+                if (j === 0 || arr[i][j - 1] === 0) {
+                    type_condition["left"][i] = [i, j];
+                }
+                if (j === arr[i].length - 1 || arr[i][j + 1] === 0) {
+                    type_condition["right"][i] = [i, j];
+                }
+                if (i === arr.length - 1 || arr[i + 1][j] === 0) {
+                    type_condition["bottom"][j] = [i, j];
+                }
+                if (i === 0 || arr[i - 1][j] === 0) {
+                    type_condition["top"][j] = [i, j];
+                }
             }
         }
     }
@@ -241,175 +198,145 @@ function clickToStart() {
     main_area.addEventListener("DOMNodeInserted", function() {
         blocks = main_area.querySelectorAll(".type");
         for (let item of blocks) {
-            if (item.isCurrent) {
-                moveNewBlock = setInterval(function() {
-                    let cur_row = parseFloat(item.style.top);
-                    let cur_col = parseFloat(item.style.left);
-                    temporaryArr = [];
-                    for (let pos in item.boundary["bottom"]) {
-                        let row = item.boundary["bottom"][pos][0] + cur_row;
-                        let col = item.boundary["bottom"][pos][1] + cur_col;
-                        // fix “Z” type and "L" type after transpose two times("7" type) can't move at -2 row
-                        row = row < -1 ? -1 : row;
-                        if (row != arr.length - 1 && arr[row + 1][col] == 0) {
-                            temporaryArr.push(1); //moving
-                        } else {
-                            temporaryArr.push(0); //stop moving
-                        }
-                    }
-                    let isMove = temporaryArr.includes(0);
-                    if (isMove) {
-                        clearInterval(moveNewBlock);
-                        item.isCurrent = false;
-                        for (let direction in item.boundary) {
-                            for (let index in item.boundary[direction]) {
-                                let row = item.boundary[direction][index][0] + cur_row;
-                                let col = item.boundary[direction][index][1] + cur_col;
-                                row = row < 0 ? 0 : row;
-                                arr[row][col] = item.color[0];
-                            }
-                        }
-                        item.remove();
-                        refreshBlock();
-                        fullRemove();
-                        // console.log(arr);
-                        isOver();
+            moveNewBlock = setInterval(function() {
+                let cur_row = parseFloat(item.style.top);
+                let cur_col = parseFloat(item.style.left);
+                temporaryArr = [];
+                for (let pos in item.boundary["bottom"]) {
+                    let row = item.boundary["bottom"][pos][0] + cur_row;
+                    let col = item.boundary["bottom"][pos][1] + cur_col;
+                    row = row < -1 ? -1 : row;
+                    if (row !== arr.length - 1 && arr[row + 1][col] === 0) {
+                        temporaryArr.push(1); //moving
                     } else {
-                        item.style.top = parseFloat(item.style.top) + 1 + "rem";
+                        temporaryArr.push(0); //stop moving
                     }
-                }, 300)
-            }
+                }
+                let isStop = temporaryArr.includes(0);
+                if (isStop) {
+                    clearInterval(moveNewBlock);
+                    for (let direction in item.boundary) {
+                        for (let index in item.boundary[direction]) {
+                            let row = item.boundary[direction][index][0] + cur_row;
+                            let col = item.boundary[direction][index][1] + cur_col;
+                            row = row < 0 ? 0 : row;
+                            arr[row][col] = item.color;
+                        }
+                    }
+                    item.remove();
+                    fullRemove();
+                    isOver();
+                } else {
+                    item.style.top = parseFloat(item.style.top) + 1 + "rem";
+                }
+            }, 300)
         }
     })
-
 
     // 添加第一个block，触发listener
     addPreDom();
     addMainDom();
 
-
     //PC control block moving
     document.onkeydown = function(ev) {
-            let isMove;
-            for (let item of blocks) {
-                let cur_row = parseFloat(item.style.top);
-                let cur_col = parseFloat(item.style.left);
-                if (item.isCurrent) {
-                    switch (ev.keyCode) {
-                        case 37:
-                            leftArrow(isMove, item, cur_row, cur_col);
-                            break;
-                        case 39:
-                            rightArrow(isMove, item, cur_row, cur_col);
-                            break;
-                        case 40:
-                            downArrow(isMove, item, cur_row, cur_col);
-                            break;
-                        case 38:
-                            upArrow(isMove, item, cur_row, cur_col);
-                    }
-                }
-
-            }
-        }
-        //mobile control block moving
-    arrowleft.addEventListener("touchstart", function() {
-        let isMove;
         for (let item of blocks) {
             let cur_row = parseFloat(item.style.top);
             let cur_col = parseFloat(item.style.left);
-            if (item.isCurrent) {
-                leftArrow(isMove, item, cur_row, cur_col);
+            switch (ev.keyCode) {
+                case 37:
+                    leftArrow(item, cur_row, cur_col);
+                    break;
+                case 39:
+                    rightArrow(item, cur_row, cur_col);
+                    break;
+                case 40:
+                    downArrow(item, cur_row, cur_col);
+                    break;
+                case 38:
+                    upArrow(item, cur_row, cur_col);
             }
-
         }
-
+    }
+    //mobile control block moving
+    arrowleft.addEventListener("touchstart", function() {
+        for (let item of blocks) {
+            let cur_row = parseFloat(item.style.top);
+            let cur_col = parseFloat(item.style.left);
+            leftArrow(item, cur_row, cur_col);
+        }
     })
     arrowright.addEventListener("touchstart", function() {
-        let isMove;
         for (let item of blocks) {
             let cur_row = parseFloat(item.style.top);
             let cur_col = parseFloat(item.style.left);
-            if (item.isCurrent) {
-                rightArrow(isMove, item, cur_row, cur_col);
-            }
-
+            rightArrow(item, cur_row, cur_col);
         }
 
     })
     arrowdown.addEventListener("touchstart", function() {
-        let isMove;
         for (let item of blocks) {
             let cur_row = parseFloat(item.style.top);
             let cur_col = parseFloat(item.style.left);
-            if (item.isCurrent) {
-                downArrow(isMove, item, cur_row, cur_col);
-            }
-
+            downArrow(item, cur_row, cur_col);
         }
-
     })
     arrowup.addEventListener("touchstart", function() {
-        let isMove;
         for (let item of blocks) {
             let cur_row = parseFloat(item.style.top);
             let cur_col = parseFloat(item.style.left);
-            if (item.isCurrent) {
-                upArrow(isMove, item, cur_row, cur_col);
-            }
-
+            upArrow(item, cur_row, cur_col);
         }
-
     })
 }
 
 //function move to left 
-function leftArrow(isMove, item, cur_row, cur_col) {
+function leftArrow(item, cur_row, cur_col) {
     temporaryArr = [];
     for (let pos in item.boundary["left"]) {
         let row = item.boundary["left"][pos][0] + cur_row;
         let col = item.boundary["left"][pos][1] + cur_col;
         // if row<0,can't get arr and error
         row = row < 0 ? 0 : row;
-        if (col != 0 && arr[row][col - 1] == 0) {
+        if (col !== 0 && arr[row][col - 1] === 0) {
             temporaryArr.push(1);
         } else {
             temporaryArr.push(0);
         }
     }
-    isMove = !temporaryArr.includes(0);
+    let isMove = !temporaryArr.includes(0);
     if (isMove) {
         item.style.left = parseFloat(item.style.left) - 1 + "rem";
     }
 }
 // function move to right
-function rightArrow(isMove, item, cur_row, cur_col) {
+function rightArrow(item, cur_row, cur_col) {
     temporaryArr = [];
     for (let pos in item.boundary["right"]) {
         let row = item.boundary["right"][pos][0] + cur_row;
         let col = item.boundary["right"][pos][1] + cur_col;
         row = row < 0 ? 0 : row;
-        if (col != arr[0].length - 1 && arr[row][col + 1] == 0) {
+        if (col !== arr[0].length - 1 && arr[row][col + 1] === 0) {
             temporaryArr.push(1);
         } else {
             temporaryArr.push(0);
         }
     }
-    isMove = !temporaryArr.includes(0);
+    let isMove = !temporaryArr.includes(0);
     if (isMove) {
         item.style.left = parseFloat(item.style.left) + 1 + "rem";
     }
 }
 // function move to down
-function downArrow(isMove, item, cur_row, cur_col) {
+function downArrow(item, cur_row, cur_col) {
     clearInterval(moveNewBlock);
+    // block 向下移动的最小距离
     let min_distance = 100;
     for (let pos in item.boundary["bottom"]) {
         let row = item.boundary["bottom"][pos][0] + cur_row;
         let col = item.boundary["bottom"][pos][1] + cur_col;
-        row = row < -1 ? -1 : row;
-        for (let i = row + 1; i < arr.length; i++) {
-            if (arr[i][col] != 0) {
+        const amendRowDif = item.arr.length;
+        for (let i = row + amendRowDif; i < arr.length; i++) {
+            if (arr[i][col] !== 0) {
                 if (i - row - 1 < min_distance) {
                     min_distance = i - row - 1;
                 }
@@ -417,7 +344,7 @@ function downArrow(isMove, item, cur_row, cur_col) {
             }
         }
     }
-    if (min_distance == 100) {
+    if (min_distance === 100) {
         item.style.top = arr.length - item.arr.length + "rem";
     } else {
         item.style.top = min_distance + parseFloat(item.style.top) + "rem";
@@ -428,18 +355,18 @@ function downArrow(isMove, item, cur_row, cur_col) {
         for (let index in item.boundary[direction]) {
             let row = item.boundary[direction][index][0] + cur_row;
             let col = item.boundary[direction][index][1] + cur_col;
-            row = row < 0 ? 0 : row;
-            arr[row][col] = item.color[0];
+            if (row >= 0) {
+                arr[row][col] = item.color;
+            }
         }
     }
     item.remove();
     refreshBlock();
     fullRemove();
-    // console.log(arr);
     isOver();
 }
 // function change direction
-function upArrow(isMove, item, cur_row, cur_col) {
+function upArrow(item, cur_row, cur_col) {
     let judge_arr = transpose(item.arr);
     let judge_boundary = getTypeCondition(judge_arr);
     let isFarthest = cur_col + judge_arr[0].length <= 16;
@@ -514,22 +441,22 @@ function addMainDom() {
 function setPrecolor(pre) {
     let color_blocks = pre_pattern.querySelectorAll(".block");
     for (let cb of color_blocks) {
-        cb.style.background = pre.color[1];
+        cb.style.background = pre.color;
     }
 }
 //  use arr to render blocks
 function refreshBlock() {
     let old_div = document.querySelectorAll(".block-arr");
-    for (let del_div of old_div) {
-        del_div.remove();
+    for (let old of old_div) {
+        old.remove();
     }
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[i].length; j++) {
-            if (arr[i][j] != 0) {
+            if (arr[i][j] !== 0) {
                 let div = document.createElement('div');
                 div.className = "block-arr";
                 main_area.prepend(div);
-                div.style.background = all_color[color][arr[i][j]];
+                div.style.background = arr[i][j];
                 div.style.top = i + "rem";
                 div.style.left = j + "rem";
             }
@@ -542,18 +469,14 @@ function fullRemove() {
     for (let i = 1; i < arr.length; i++) {
         if (!arr[i].includes(0)) {
             time++; //判断一次消除了几行
-            //full row set 0
-            for (let j = 0; j < arr[i].length; j++) {
-                arr[i][j] = 0;
-            }
             //reset arr 
             for (let k = i; k > 0; k--) {
                 arr[k] = arr[k - 1];
             }
-            arr[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            refreshBlock();
+            arr[0] = (new Array(16)).fill(0);
         }
     }
+    refreshBlock();
     if (time > 0) {
         score = score + scoring_rules[time];
         cur_score.innerHTML = score;
@@ -574,20 +497,18 @@ function transpose(origin_arr) {
 
 // judge over
 function isOver() {
-    for (let item in arr[0]) {
-        if (arr[0][item] != 0) {
-            clearInterval(moveNewBlock);
-            last_score.innerHTML = score;
-            end_popUp.style.display = "flex";
-            if (!localStorage.gameHightestScore) {
-                localStorage.gameHightestScore = 0;
-            }
-            if (localStorage.gameHightestScore < score) {
-                localStorage.setItem("gameHightestScore", score);
-            }
-            highest_score.innerHTML = localStorage.gameHightestScore;
-            return;
+    if (arr[0].find(item => item !== 0)) {
+        clearInterval(moveNewBlock);
+        last_score.innerHTML = score;
+        end_popUp.style.display = "flex";
+        if (!localStorage.gameHightestScore) {
+            localStorage.gameHightestScore = 0;
         }
+        if (localStorage.gameHightestScore < score) {
+            localStorage.setItem("gameHightestScore", score);
+        }
+        highest_score.innerHTML = localStorage.gameHightestScore;
+        return;
     }
     addMainDom();
 }
